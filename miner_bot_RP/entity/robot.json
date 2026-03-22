@@ -1,0 +1,32 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "miner_bot_bp:robot",
+            "materials": {
+                "default": "entity_alphatest"
+            },
+            "textures": {
+                "default": "textures/entity/robottex"
+            },
+            "geometry": {
+                "default": "geometry.robot"
+            },
+            "render_controllers": ["controller.render.default"],
+            "animations": {
+                "idle": "animation.robot.idle",
+                "move": "animation.robot.walk"
+            },
+            "scripts": {
+                "animate": [
+        { "move": "query.modified_move_speed > 0.1" },
+        { "idle": "query.modified_move_speed <= 0.1" }
+    ]
+            },
+            "spawn_egg": {
+                "overlay_color": "#bdd1d1",
+                "base_color": "#9fb3b3"
+            }
+        }
+    }
+}

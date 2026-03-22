@@ -1,2 +1,4 @@
 pack.name=Minor Bot Pack
 pack.description=Assists you in finding rare stuff to mine.
+entity.robot.name=Robot
+item.spawn_egg.entity:robot.name=Robot

@@ -1,22 +1,17 @@
 {
-    "format_version": 3,
-    "header": {
-        "name": "pack.name",
-        "description": "pack.description",
-        "uuid": "848cb82f-4d04-49cd-963e-f6de8987a9dd",
-        "version": "1.0.0",
-        "min_engine_version": "1.26.0"
-    },
-    "modules": [
-        {
-            "type": "resources",
-            "uuid": "5acf61d3-679a-4da9-b8fd-0a3a1bfa9083",
-            "version": "1.0.0"
-        }
-    ],
-    "metadata": {
-        "authors": ["Your Name"],
-        "product_type": "addon"
-    },
-    "capabilities": ["pbr"] 
+  "format_version": 2,
+  "header": {
+    "name": "Miner Bot RP",
+    "description": "Resource pack for Miner Bot",
+    "uuid": "27f6a1d6-71b8-4295-b597-69b535cc2c37",
+    "version": [1, 0, 0],
+    "min_engine_version": [1, 26, 0]
+  },
+  "modules": [
+    {
+      "type": "resources",
+      "uuid": "94b6b222-3446-4470-88ca-ce66b2567a08",
+      "version": [1, 0, 0]
+    }
+  ]
 }

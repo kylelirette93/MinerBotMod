@@ -1,21 +1,23 @@
 {
-    "format_version": 3,
-    "header": {
-        "name": "pack.name",
-        "description": "pack.description",
-        "uuid": "29672677-1039-430e-9941-f7b663beb420",
-        "version": "1.0.0",
-        "min_engine_version": "1.26.0"
-    },
-    "modules": [
-        {
-            "type": "data",
-            "uuid": "de6a6654-a347-4594-82ac-a01885dfdb79",
-            "version": "1.0.0"
-        }
-    ],
-    "metadata": {
-        "authors": ["Your Name"],
-        "product_type": "addon"
+  "format_version": 2,
+  "header": {
+    "name": "Miner Bot BP",
+    "description": "Behavior pack for Miner Bot",
+    "uuid": "bd6a7ad0-fb64-4424-9b82-1147ae782901",
+    "version": [1, 0, 0],
+    "min_engine_version": [1, 26, 0]
+  },
+  "modules": [
+    {
+      "type": "data",
+      "uuid": "a4a6c48a-316e-4365-b290-8a2abafff4d4",
+      "version": [1, 0, 0]
     }
+  ],
+  "dependencies": [
+  {
+    "uuid": "27f6a1d6-71b8-4295-b597-69b535cc2c37",
+    "version": [1, 0, 0]
+  }
+]
 }
