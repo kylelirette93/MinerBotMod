@@ -1,0 +1,32 @@
+{
+  "name": "minerbotmod",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc -p miner_bot_BP/tsconfig.json",
+    "watch": "tsc -p miner_bot_BP/tsconfig.json --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kylelirette93/MinerBotMod.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/kylelirette93/MinerBotMod/issues"
+  },
+  "homepage": "https://github.com/kylelirette93/MinerBotMod#readme",
+  "dependencies": {
+    "@minecraft/server": "^2.8.0-beta.1.26.20-preview.20",
+    "@minecraft/server-admin": "^1.0.0-beta.11940b24",
+    "@minecraft/server-gametest": "^1.0.0-beta.1.26.20-preview.20",
+    "@minecraft/server-net": "^1.0.0-beta.11940b24",
+    "@minecraft/server-ui": "^2.1.0-beta.1.26.20-preview.20"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.2"
+  }
+}
