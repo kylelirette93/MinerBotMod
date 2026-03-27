@@ -47,24 +47,15 @@
                 "probability": 0.03
             },
             "minecraft:interact": {
-                "interactions": [
-                    {
-                        "on_interact": {
-                            "filters": {
-                                "test": "is_family",
-                                "subject": "other",
-                                "value": "player"
-                            },
-                            "event": "break_box",
-                            "target": "self"
-                        },
-                        "swing": true,
-                        "spawn_items": {
-                            "table": "loot_tables/chests/random_find.json"
-                        }
-                    }
-                ]
-            }
+    "interactions": [
+        {
+            "on_interact": {},
+            "interact_text": "Talk to Miner Bot",
+            "swing": false,
+            "play_sounds": ""
+        }
+    ]
+}    
         }
     }
 }

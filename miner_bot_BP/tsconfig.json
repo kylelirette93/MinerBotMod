@@ -1,12 +1,18 @@
 {
     "compilerOptions": {
-        "module": "nodenext",
-        "moduleResolution": "nodenext",
-        "target": "ES2021",
-        "allowSyntheticDefaultImports": true,
+        "target": "ES2022",
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
         "rootDir": "./src",
-        "outDir": "./scripts"
+        "outDir": "./scripts",
+        "paths": {
+            "@minecraft/*": ["../node_modules/@minecraft/*"]
+        },
+        "allowJs": true,
+        "strict": true,
+        "noEmit": false,
+        "skipLibCheck": true
     },
-    "exclude": ["node_modules"],
-    "include": ["src"]
+    "include": ["src/**/*"],
+    "exclude": ["node_modules", "scripts"]
 }
