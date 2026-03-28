@@ -7,6 +7,18 @@
             "is_spawnable": true
         
         },
+        "component_groups": {
+            "robot:is_tamed": {
+                "minecraft:is_tamed": {},
+                "minecraft:tameable": {},
+                "minecraft:behavior.follow_owner": {
+                    "priority": 5,
+                    "speed_multiplier": 1.1,
+                    "start_distance": 3.0,
+                    "stop_distance": 1.0
+                }
+            }
+        },
         "components": {
             "minecraft:movement": {
                 "value": 0.2
@@ -47,15 +59,31 @@
                 "probability": 0.03
             },
             "minecraft:interact": {
-    "interactions": [
-        {
-            "on_interact": {},
-            "interact_text": "Talk to Miner Bot",
-            "swing": false,
-            "play_sounds": ""
-        }
-    ]
-}    
-        }
+                "interactions": [
+                {
+                    "on_interact": {},
+                    "interact_text": "Talk to Miner Bot",
+                    "swing": false,
+                    "play_sounds": ""
+                } 
+            ]
+            }
+        },
+        "events": {
+                "my:follow_event": {
+                    "add": {
+                        "component_groups": [
+                            "robot:is_tamed"
+                        ]
+                    }
+                },
+                "my:stop_follow_event": {
+                    "remove": {
+                        "component_groups": [
+                            "robot:is_tamed"
+                        ]
+                    }
+                }
+            }
     }
 }
