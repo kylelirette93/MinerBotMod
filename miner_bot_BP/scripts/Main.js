@@ -1,5 +1,6 @@
 import { world, system, ItemStack, MolangVariableMap } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
+import { AudioManager } from "./AudioManager.js";
 world.afterEvents.playerInteractWithEntity.subscribe((event) => {
     const { player, target } = event;
     if (target.typeId === "miner_bot_bp:robot") {
@@ -33,6 +34,7 @@ function showActionForm(player, target) {
         else if (result.selection === 1) {
             player.sendMessage("Miner Bot: Okay! I'm gonna go find something for you! Be back in 30");
             target.triggerEvent("my:find_item_event");
+            AudioManager.playSound(player, player.location, "random.orb");
             system.runTimeout(() => {
                 target.teleport(player.location, { dimension: player.dimension });
                 const inventory = target.getComponent("minecraft:inventory");

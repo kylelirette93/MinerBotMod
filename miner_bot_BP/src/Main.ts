@@ -1,5 +1,6 @@
 import { world, system, Player, Entity, ItemStack, Container, EntityInventoryComponent, MolangVariableMap } from "@minecraft/server";
 import { ActionFormData, ActionFormResponse } from "@minecraft/server-ui";
+import { AudioManager } from "./AudioManager.js"; 
 
 world.afterEvents.playerInteractWithEntity.subscribe((event) => {
     const { player, target } = event;
@@ -39,6 +40,7 @@ function showActionForm(player: Player, target: Entity): void {
         else if (result.selection === 1) {
             player.sendMessage("Miner Bot: Okay! I'm gonna go find something for you! Be back in 30");
             target.triggerEvent("my:find_item_event");
+            AudioManager.playSound(player, player.location, "random.orb");
             system.runTimeout(() => {
                             target.teleport(player.location, { dimension: player.dimension });
             
