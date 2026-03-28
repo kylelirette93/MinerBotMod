@@ -1,6 +1,7 @@
-import { world, system, ItemStack, MolangVariableMap } from "@minecraft/server";
+import { world, system, ItemStack } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
 import { AudioManager } from "./AudioManager.js";
+import { ParticleManager } from "./ParticleManager.js";
 world.afterEvents.playerInteractWithEntity.subscribe((event) => {
     const { player, target } = event;
     if (target.typeId === "miner_bot_bp:robot") {
@@ -35,6 +36,7 @@ function showActionForm(player, target) {
             player.sendMessage("Miner Bot: Okay! I'm gonna go find something for you! Be back in 30");
             target.triggerEvent("my:find_item_event");
             AudioManager.playSound(player, player.location, "random.orb");
+            ParticleManager.playParticles(target, "minecraft:balloon_gas_particle", 2);
             system.runTimeout(() => {
                 target.teleport(player.location, { dimension: player.dimension });
                 const inventory = target.getComponent("minecraft:inventory");
@@ -45,7 +47,6 @@ function showActionForm(player, target) {
                     inventory.container.addItem(new ItemStack(randomItem, 1));
                 }
                 player.sendMessage("Miner Bot: I'm back! Check my inventory.");
-                player.dimension.spawnParticle("minecraft:sparker_particle", target.location, new MolangVariableMap());
             }, 600);
         }
         else if (result.selection === 2) {
