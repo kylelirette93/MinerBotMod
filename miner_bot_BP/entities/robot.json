@@ -17,6 +17,14 @@
                     "start_distance": 3.0,
                     "stop_distance": 1.0
                 }
+            },
+            "robot:scouting": {
+                "minecraft:is_tamed": {},
+                "minecraft:movement": { "value": 0.4 },
+                "minecraft:behavior.random_stroll": {
+                    "priority": 1,
+                    "speed_multiplier": 1.5
+                }
             }
         },
         "components": {
@@ -58,6 +66,11 @@
                 "look_distance": 10,
                 "probability": 0.03
             },
+            "minecraft:inventory": {
+                "inventory_size": 9,
+                "container_type": "container",
+                "private": false
+            },
             "minecraft:interact": {
                 "interactions": [
                 {
@@ -83,6 +96,10 @@
                             "robot:is_tamed"
                         ]
                     }
+                },
+                "my:find_item_event": {
+                    "remove": { "component_groups": ["robot:is_tamed"]},
+                    "add": { "component_groups": ["robot:scouting"]}
                 }
             }
     }

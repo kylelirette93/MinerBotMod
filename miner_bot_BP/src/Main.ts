@@ -1,4 +1,4 @@
-import { world, system, Player, Entity, EntityComponent } from "@minecraft/server";
+import { world, system, Player, Entity, ItemStack, Container, EntityInventoryComponent, MolangVariableMap } from "@minecraft/server";
 import { ActionFormData, ActionFormResponse } from "@minecraft/server-ui";
 
 world.afterEvents.playerInteractWithEntity.subscribe((event) => {
@@ -37,10 +37,28 @@ function showActionForm(player: Player, target: Entity): void {
             }
         }
         else if (result.selection === 1) {
+            player.sendMessage("Miner Bot: Okay! I'm gonna go find something for you! Be back in 30");
+            target.triggerEvent("my:find_item_event");
+            system.runTimeout(() => {
+                            target.teleport(player.location, { dimension: player.dimension });
             
+                            const inventory = target.getComponent("minecraft:inventory");
+                            // Grab random item from target's inventory and give it to player.
+                            if (inventory && inventory.container) {
+                                const items = ["minecraft:iron_ingot", "minecraft:raw_iron", "minecraft:coal", "minecraft:diamond"];
+                                const randomItem = items[Math.floor(Math.random() * items.length)];
+                                inventory.container.addItem(new ItemStack(randomItem, 1));
+                            }
+                            player.sendMessage("Miner Bot: I'm back! Check my inventory.");
+                            player.dimension.spawnParticle(
+                                "minecraft:sparker_particle",
+                                target.location,
+                                new MolangVariableMap()
+                            );
+                        }, 600);
         }
         else if (result.selection === 2) {
-
+            showInventoryForm(player, target);
         }
         else if (result.selection === 3) {
             target.triggerEvent("my:stop_follow_event");
@@ -54,3 +72,64 @@ function showActionForm(player: Player, target: Entity): void {
         console.warn("UI Error: " + error);
     });
 }
+
+function showInventoryForm(player: Player, target: Entity) {
+    const inventory = target.getComponent("minecraft:inventory") as EntityInventoryComponent;
+
+    // Guard clause if inventory is null.
+    if (!inventory || !inventory.container) {
+        player.sendMessage("Miner bot storage not found..");
+        return;
+    }
+
+    const container: Container = inventory.container;
+    const inventoryForm = new ActionFormData()
+        .title("Miner Bot Inventory")
+        .body("Select an item you'd like to take.");
+    
+        // array to track number of slots.
+        const itemSlots: number[] = [];
+
+        // Get item name to display in form.
+        for (let i = 0; i < container.size; i++) {
+            const item = container.getItem(i);
+            if (item) {
+                const itemName = splitId(item.typeId);
+                inventoryForm.button(`${itemName} (x${item.amount})`);
+                itemSlots.push(i);
+            }
+        }
+
+        // If the inventory is empty, the robot will tell the player.
+        if (itemSlots.length === 0) {
+            player.sendMessage("I'm empty handed right now");
+            return;
+        }
+
+        inventoryForm.show(player).then((result: ActionFormResponse) => {
+            // If the selection was invalid or canceled, do nothing.
+            if (result.canceled || result.selection === undefined) return;
+
+            const selectedSlot = itemSlots[result.selection];
+            const itemToGive = container.getItem(selectedSlot);
+
+            if (itemToGive) {
+                const playerInventory = player.getComponent("minecraft:inventory") as EntityInventoryComponent;
+
+                if (playerInventory && playerInventory.container) {
+                    // Add item to player inventory.
+                    playerInventory.container.addItem(itemToGive);
+                    // Remove item from slot that was chosen.
+                    container.setItem(selectedSlot, undefined);
+                    player.sendMessage(`Recieved: ${splitId(itemToGive.typeId)}`);
+                    // Refresh the UI.
+                    showInventoryForm(player, target);
+                }
+            }
+        })
+}
+
+function splitId(string: String): String {
+    const itemName = string.split(":")[1].replace(/_/g, " ");
+    return itemName;
+} 
