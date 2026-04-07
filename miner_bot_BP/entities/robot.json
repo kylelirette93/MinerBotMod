@@ -10,12 +10,12 @@
         "component_groups": {
             "robot:is_tamed": {
                 "minecraft:is_tamed": {},
+                "minecraft:movement": { "value": 0.2 },
                 "minecraft:tameable": {},
                 "minecraft:behavior.follow_owner": {
                     "priority": 5,
-                    "speed_multiplier": 1.1,
                     "start_distance": 3.0,
-                    "stop_distance": 1.0
+                    "stop_distance": 2.0
                 }
             },
             "robot:scouting": {
@@ -23,7 +23,7 @@
                 "minecraft:movement": { "value": 0.4 },
                 "minecraft:behavior.random_stroll": {
                     "priority": 1,
-                    "speed_multiplier": 1.5
+                    "speed_multiplier": 1.1
                 }
             }
         },
@@ -35,8 +35,12 @@
                 "family": [ "robot", "monster" ]
             },
             "minecraft:collision_box": {
-                "width": 0.6,
-                "height": 1
+                "width": 0.8,
+                "height": 2.2
+            },
+            "minecraft:selection_box": {
+                "width": 0.8,
+                "height": 2.2
             },
             "minecraft:physics": {
                 "has_collision": true,
@@ -56,7 +60,7 @@
             },
             "minecraft:behavior.random_stroll": {
                 "priority": 7,
-                "speed_multiplier": 2
+                "speed_multiplier": 1.1
             },
             "minecraft:behavior.random_look_around": {
                 "priority": 8
@@ -100,6 +104,10 @@
                 "my:find_item_event": {
                     "remove": { "component_groups": ["robot:is_tamed"]},
                     "add": { "component_groups": ["robot:scouting"]}
+                },
+                "my:return_from_scouting": {
+                    "remove": { "component_groups": ["robot:scouting"] },
+                    "add": { "component_groups": ["robot:is_tamed"] }
                 }
             }
     }
