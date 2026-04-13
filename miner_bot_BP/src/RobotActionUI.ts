@@ -6,8 +6,8 @@ import { Inventory } from "./Inventory.js";
 import { InventoryUI } from "./InventoryUI.js";
 
 export class RobotActionUI {
-    static isFetching: boolean = false;
-    static showActionForm(player: Player, target: Entity): void {
+    isFetching: boolean = false;
+    showActionForm(player: Player, target: Entity): void {
 
     // Creates a form with options for the player to choose from.
     const form = new ActionFormData()
@@ -25,6 +25,11 @@ export class RobotActionUI {
         if (result.selection === 0) {
             target.triggerEvent("my:follow_event");
 
+            const movementComponent = target.getComponent("minecraft:movement");
+            if (movementComponent) {
+            movementComponent.setCurrentValue(0.2);
+            }
+
             system.runTimeout(() => {
                 const tameable = target.getComponent("minecraft:tameable");
             if (tameable) {
@@ -33,7 +38,7 @@ export class RobotActionUI {
             }}, 3);      
         }
         else if (result.selection === 1) {
-            this.isFetching = true;
+            target.setDynamicProperty("isFetching", true);
             player.sendMessage("Miner Bot: Okay! I'm gonna go find something for you! Be back in 30");
 
             // Capture data for particles and sound, that way if something changes with player it won't affect the teleportation.
@@ -41,6 +46,11 @@ export class RobotActionUI {
             const capturedLocation = player.location;
             const capturedRotation = player.getRotation().y;
             
+            const movementComponent = target.getComponent("minecraft:movement");
+            if (movementComponent) 
+            {
+                movementComponent.setCurrentValue(0.2);
+            }
             // Trigger event for robot to find item.
             target.triggerEvent("my:find_item_event");
             
@@ -48,7 +58,7 @@ export class RobotActionUI {
             system.runTimeout(() => {
                 if (!target || !target.isValid) {
                     // If target is not valid, stop execution.
-                    this.isFetching = false;
+                    target.setDynamicProperty("isFetching", false);
                     return;
                 }
                 
@@ -77,16 +87,26 @@ export class RobotActionUI {
                     ParticleManager.playParticles(target, "minecraft:scute_particles", 5);
             }
 
-            this.isFetching = false;
+            target.setDynamicProperty("isFetching", false);
         }, 600);
     }
         else if (result.selection === 2) {
             // Opens inventory UI.
+            const movementComponent = target.getComponent("minecraft:movement");
+            if (movementComponent) 
+            {
+                movementComponent.setCurrentValue(0.4);
+            }
             InventoryUI.showInventoryForm(player, target);
         }
         else if (result.selection === 3) {
             // Triggers event that removes follow behavior.
             target.triggerEvent("my:stop_follow_event");
+            const movementComponent = target.getComponent("minecraft:movement");
+            if (movementComponent) 
+            {
+                movementComponent.setCurrentValue(0);
+            }
             player.sendMessage("The robot is waiting.");
         }
         else if (result.selection === 4) {
