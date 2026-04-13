@@ -10,10 +10,6 @@
         "component_groups": {
             "robot:is_tamed": {
                 "minecraft:is_tamed": {},
-                "minecraft:behavior.move_to_owner": {
-                    "priority": 4,
-                    "speed_multiplier": 1.0
-                },
                 "minecraft:behavior.follow_owner": {
                     "priority": 5,
                     "start_distance": 5.0,
